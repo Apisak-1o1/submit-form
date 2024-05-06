@@ -73,9 +73,9 @@
     <h1 style="text-align: center;">
       Users Data
     </h1>
-    <!-- <div v-for="user in users" :key="user.id" class="userList">
+    <div v-for="user in users" :key="user.id" class="userList">
       {{ user }}
-    </div> -->
+    </div>
   </div>
 </template>
 
@@ -96,6 +96,7 @@ export default {
   },
   methods: {
     check: function (e) {
+      e.preventDefault()
       this.errors = []
 
       if (!this.users.name) {
@@ -125,12 +126,21 @@ export default {
         this.errors.push('Password not match.')
       }
       if (!this.errors.length) {
-        // eslint-disable-next-line no-console
-        console.log(this.users)
-        return true
+        this.users.push({
+          name: this.users.name,
+          lastname: this.users.lastname,
+          age: this.users.age,
+          email: this.users.email,
+          password: this.users.password
+        })
+        // Clear input fields
+        this.users.name = ''
+        this.users.lastname = ''
+        this.users.age = ''
+        this.users.email = ''
+        this.users.password = ''
+        this.confirmPassword = ''
       }
-
-      e.preventDefault()
     },
     validEmail: function (email) {
       const valid = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
